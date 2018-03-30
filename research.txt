@@ -1,0 +1,38 @@
+https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Applic01$" -p 1401:1433 --name docker-sql-01 -d microsoft/mssql-server-linux:2017-latest
+https://stackoverflow.com/questions/5294721/how-to-specify-a-port-number-in-sql-server-connection-string
+
+https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-strings
+
+https://www.benday.com/2017/12/19/ef-core-2-0-migrations-without-hard-coded-connection-strings/
+
+https://docs.docker.com/compose/aspnet-mssql-compose/
+
+https://code.visualstudio.com/docs/other/dotnet
+https://docs.microsoft.com/nl-nl/dotnet/core/tutorials/with-visual-studio-code#debug
+https://docs.microsoft.com/en-us/aspnet/core/tutorials/web-api-vsc
+
+http://azure.github.io/amqpnetlite/articles/building_application.html
+
+https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/new-db
+
+http://localhost:8161
+
+https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api
+
+https://stackify.com/asp-net-core-features/
+
+https://github.com/gitpitch/gitpitch
+https://gitpitch.com/pencil42be/workshop-openshift
+
+https://docs.microsoft.com/nl-nl/aspnet/core/signalr/get-started?tabs=visual-studio
+https://github.com/aspnet/signalr-samples/blob/master/ChatSample/ChatSample/ChatHub.cs
+
+https://stackoverflow.com/questions/46904678/call-signalr-core-hub-method-from-controller
+
+activemq
+jre 10
+JAVA_HOME
+bin\activemq start
+
+docker ps
