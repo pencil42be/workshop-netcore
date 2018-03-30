@@ -1,18 +1,18 @@
 @title[Introduction]
 
-# Git<span class="gold">Pitch</span>
+## PENCIL42
 
-#### Markdown Presentations For Everyone on Git
+#### Workshop .NET Core / Openshift
 <br>
 <br>
-<span class="byline">[ GitHub, GitLab, Bitbucket, GitBucket, Gitea, Gogs ]</span>
+<span class="byline">this is a byline</span>
 
 ---
 
-@title[PITCHME.md]
+@title[Agenda]
 
-#### GitPitch turns <span class="gold">PITCHME.md</span> into
-#### interactive,
-#### online and offline slideshows.
+#### Overzicht
+#### interactive
+#### online and offline 
 <br>
-<span class="aside">Just like this one...</span>
+<span class="aside">this is an aside</span>
