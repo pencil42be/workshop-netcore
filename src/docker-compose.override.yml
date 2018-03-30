@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  pencil42.pakjesdienst.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "32800:80"
+
+  pencil42.pakjesdienst.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "32801:80"
+

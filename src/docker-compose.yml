@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  pencil42.pakjesdienst.api:
+    image: pencil42pakjesdienstapi
+    build:
+      context: .
+      dockerfile: Pencil42.PakjesDienst.Api/Dockerfile
+
+  pencil42.pakjesdienst.web:
+    image: pencil42pakjesdienstweb
+    build:
+      context: .
+      dockerfile: Pencil42.PakjesDienst.Web/Dockerfile
