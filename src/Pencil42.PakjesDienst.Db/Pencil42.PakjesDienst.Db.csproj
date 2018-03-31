@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AMQPNetLite.Core" Version="2.1.2" />
+    <PackageReference Include="AMQPNetLite.Serialization" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
   </ItemGroup>
 

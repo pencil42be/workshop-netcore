@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pencil42.PakjesDienst.Db;
+using Pencil42.PakjesDienst.Db.Amqp;
 
 namespace Pencil42.PakjesDienst.Api.Controllers
 {
@@ -31,8 +32,7 @@ namespace Pencil42.PakjesDienst.Api.Controllers
             var entity = await _context.Pakjes.AddAsync(pakje);
             await _context.SaveChangesAsync();
 
-            await _queueSender.SendMessage(
-                $"pakje met id {entity.Entity.PakjeId} van {entity.Entity.Verzender} voor {entity.Entity.Bestemmeling}");
+            await _queueSender.SendMessage(pakje.ToPakjeMessage());
 
             return new OkObjectResult(entity.Entity);
         }
@@ -58,13 +58,39 @@ namespace Pencil42.PakjesDienst.Api.Controllers
             var entity = await _context.Pakjes.FirstOrDefaultAsync(p => p.PakjeId == pakje.PakjeId);
             if (entity == null) return new NotFoundResult();
 
+            PakjeMessage pakjeMessage = null;
+            if (pakje.LeveringsStatus == LeveringsStatus.Geleverd)
+            {
+                pakjeMessage = pakje.ToPakjeMessage<PakjeGeleverdMessage>();
+                var s = pakjeMessage as PakjeGeleverdMessage;
+                s.GeleverdOp = pakje.GeleverdOp;
+            }
+            else if (pakje.LeveringsStatus != entity.LeveringsStatus)
+            {
+                pakjeMessage = pakje.ToPakjeMessage<PakjeStatusGewijzigdMessage>();
+                var s = pakjeMessage as PakjeStatusGewijzigdMessage;
+                s.VorigeStatus = entity.LeveringsStatus;
+                s.NieuweStatus = pakje.LeveringsStatus;
+            }
+            else if(pakje.VoorzieneLeveringOp != entity.VoorzieneLeveringOp)
+            {
+                pakjeMessage = pakje.ToPakjeMessage<PakjeLeveringGewijzigdMessage>();
+                var s = pakjeMessage as PakjeLeveringGewijzigdMessage;
+                s.VorigeVoorzieneLeveringOp = entity.VoorzieneLeveringOp;
+                s.NieuweVoorzieneLeveringOp = pakje.VoorzieneLeveringOp;
+            }
+
             entity.LeveringsStatus = pakje.LeveringsStatus;
-            //TODO: rest
+            entity.Bestemmeling = pakje.Bestemmeling;
+            entity.Inhoud = pakje.Inhoud;
+            entity.KoerierDienst = pakje.KoerierDienst;
+            entity.Verzender = pakje.Verzender;
+            entity.VoorzieneLeveringOp = pakje.VoorzieneLeveringOp;
+            entity.GeleverdOp = pakje.GeleverdOp;
 
             await _context.SaveChangesAsync();
 
-            await _queueSender.SendMessage(
-                $"pakje met id {entity.PakjeId} van {entity.Verzender} voor {entity.Bestemmeling} aangepast");
+            await _queueSender.SendMessage(pakjeMessage);
 
             return new OkObjectResult(entity);
         }

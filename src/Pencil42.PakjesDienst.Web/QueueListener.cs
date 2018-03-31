@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Amqp;
+using Amqp.Serialization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pencil42.PakjesDienst.Db;
+using Pencil42.PakjesDienst.Db.Amqp;
 
 namespace Pencil42.PakjesDienst.Web
 {
@@ -60,6 +62,8 @@ namespace Pencil42.PakjesDienst.Web
         private void OnMessage(IReceiverLink receiverLink, Message message)
         {
             _logger.LogDebug($"QueueListener Message received");
+
+            var pakjeMessage = message.GetBody<PakjeMessage>();
 
             Task.Run(() => _hubcontext.Clients.All.SendAsync("broadcastMessage", "queue", message));
         }
