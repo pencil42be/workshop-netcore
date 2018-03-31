@@ -11,8 +11,8 @@ using System;
 namespace Pencil42.PakjesDienst.Db.Migrations
 {
     [DbContext(typeof(PakjesContext))]
-    [Migration("20180330171433_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180331200328_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace Pencil42.PakjesDienst.Db.Migrations
 
                     b.Property<string>("Bestemmeling");
 
-                    b.Property<DateTime>("GeleverdOp");
+                    b.Property<DateTime?>("GeleverdOp");
 
                     b.Property<string>("Inhoud");
 
@@ -38,7 +38,7 @@ namespace Pencil42.PakjesDienst.Db.Migrations
 
                     b.Property<string>("Verzender");
 
-                    b.Property<DateTime>("VoorzieneLeveringOp");
+                    b.Property<DateTime?>("VoorzieneLeveringOp");
 
                     b.HasKey("PakjeId");
 

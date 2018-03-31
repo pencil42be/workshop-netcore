@@ -64,8 +64,9 @@ namespace Pencil42.PakjesDienst.Web
             _logger.LogDebug($"QueueListener Message received");
 
             var pakjeMessage = message.GetBody<PakjeMessage>();
+           _receiverLink.Accept(message);
 
-            Task.Run(() => _hubcontext.Clients.All.SendAsync("broadcastMessage", "queue", message));
+            Task.Run(() => _hubcontext.Clients.All.SendAsync("broadcastMessage", "queue", pakjeMessage));
         }
 
         public override async Task StopAsync(CancellationToken stoppingToken)

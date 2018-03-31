@@ -58,38 +58,46 @@ namespace Pencil42.PakjesDienst.Api.Controllers
             var entity = await _context.Pakjes.FirstOrDefaultAsync(p => p.PakjeId == pakje.PakjeId);
             if (entity == null) return new NotFoundResult();
 
+            // determine update type
             PakjeMessage pakjeMessage = null;
             if (pakje.LeveringsStatus == LeveringsStatus.Geleverd)
             {
-                pakjeMessage = pakje.ToPakjeMessage<PakjeGeleverdMessage>();
-                var s = pakjeMessage as PakjeGeleverdMessage;
-                s.GeleverdOp = pakje.GeleverdOp;
+                pakjeMessage = new PakjeGeleverdMessage();
+                 ((PakjeGeleverdMessage)pakjeMessage).GeleverdOp = pakje.GeleverdOp;
             }
             else if (pakje.LeveringsStatus != entity.LeveringsStatus)
             {
-                pakjeMessage = pakje.ToPakjeMessage<PakjeStatusGewijzigdMessage>();
-                var s = pakjeMessage as PakjeStatusGewijzigdMessage;
-                s.VorigeStatus = entity.LeveringsStatus;
-                s.NieuweStatus = pakje.LeveringsStatus;
+                pakjeMessage = new PakjeStatusGewijzigdMessage();
+                ((PakjeStatusGewijzigdMessage)pakjeMessage).VorigeStatus = entity.LeveringsStatus;
+                ((PakjeStatusGewijzigdMessage)pakjeMessage).NieuweStatus = pakje.LeveringsStatus;
             }
             else if(pakje.VoorzieneLeveringOp != entity.VoorzieneLeveringOp)
             {
-                pakjeMessage = pakje.ToPakjeMessage<PakjeLeveringGewijzigdMessage>();
-                var s = pakjeMessage as PakjeLeveringGewijzigdMessage;
-                s.VorigeVoorzieneLeveringOp = entity.VoorzieneLeveringOp;
-                s.NieuweVoorzieneLeveringOp = pakje.VoorzieneLeveringOp;
+                pakjeMessage = new PakjeLeveringGewijzigdMessage();
+                ((PakjeLeveringGewijzigdMessage)pakjeMessage).VorigeVoorzieneLeveringOp = entity.VoorzieneLeveringOp;
+                ((PakjeLeveringGewijzigdMessage)pakjeMessage).NieuweVoorzieneLeveringOp = pakje.VoorzieneLeveringOp;
+            }
+            else
+            {
+                pakjeMessage = new PakjeMessage();
             }
 
+            // save changes
             entity.LeveringsStatus = pakje.LeveringsStatus;
-            entity.Bestemmeling = pakje.Bestemmeling;
-            entity.Inhoud = pakje.Inhoud;
-            entity.KoerierDienst = pakje.KoerierDienst;
-            entity.Verzender = pakje.Verzender;
-            entity.VoorzieneLeveringOp = pakje.VoorzieneLeveringOp;
-            entity.GeleverdOp = pakje.GeleverdOp;
-
+            entity.Bestemmeling = pakje.Bestemmeling ?? entity.Bestemmeling;
+            entity.Inhoud = pakje.Inhoud ?? entity.Inhoud;
+            entity.KoerierDienst = pakje.KoerierDienst ?? entity.KoerierDienst;
+            entity.Verzender = pakje.Verzender ?? entity.Verzender;
+            entity.VoorzieneLeveringOp = pakje.VoorzieneLeveringOp ?? entity.VoorzieneLeveringOp;
+            entity.GeleverdOp = pakje.GeleverdOp ?? entity.GeleverdOp;
             await _context.SaveChangesAsync();
 
+            // send message
+            pakjeMessage.Bestemmeling = entity.Bestemmeling;
+            pakjeMessage.Inhoud = entity.Inhoud;
+            pakjeMessage.KoerierDienst = entity.KoerierDienst;
+            pakjeMessage.Verzender = entity.Verzender;
+            pakjeMessage.VoorzieneLeveringOp = entity.VoorzieneLeveringOp;
             await _queueSender.SendMessage(pakjeMessage);
 
             return new OkObjectResult(entity);

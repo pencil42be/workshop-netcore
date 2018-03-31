@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Amqp;
+using Amqp.Framing;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pencil42.PakjesDienst.Db;
@@ -28,7 +29,7 @@ namespace Pencil42.PakjesDienst.Api
             Connection connection = await Connection.Factory.CreateAsync(address);
             Session session = new Session(connection);
 
-            Message message = new Message(pakjeMessage);
+            Message message = new Message(){ BodySection = new AmqpValue<PakjeMessage>(pakjeMessage) };
             SenderLink sender = new SenderLink(session, "sender-link", _settings.QueueName);
             await sender.SendAsync(message);
 

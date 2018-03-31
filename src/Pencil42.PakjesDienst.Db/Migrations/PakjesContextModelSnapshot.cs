@@ -27,7 +27,7 @@ namespace Pencil42.PakjesDienst.Db.Migrations
 
                     b.Property<string>("Bestemmeling");
 
-                    b.Property<DateTime>("GeleverdOp");
+                    b.Property<DateTime?>("GeleverdOp");
 
                     b.Property<string>("Inhoud");
 
@@ -37,7 +37,7 @@ namespace Pencil42.PakjesDienst.Db.Migrations
 
                     b.Property<string>("Verzender");
 
-                    b.Property<DateTime>("VoorzieneLeveringOp");
+                    b.Property<DateTime?>("VoorzieneLeveringOp");
 
                     b.HasKey("PakjeId");
 

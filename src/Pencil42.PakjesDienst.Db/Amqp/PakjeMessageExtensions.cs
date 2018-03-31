@@ -20,7 +20,7 @@ namespace Pencil42.PakjesDienst.Db.Amqp
             };
         }
 
-        public static PakjeMessage ToPakjeMessage<T>(this Pakje pakje) where T: PakjeMessage
+        public static T ToPakjeMessage<T>(this Pakje pakje) where T: PakjeMessage
         {
             T result = (T) Activator.CreateInstance(typeof(T));
 
@@ -30,6 +30,11 @@ namespace Pencil42.PakjesDienst.Db.Amqp
             result.KoerierDienst = pakje.KoerierDienst;
             result.Verzender = pakje.Verzender;
             result.VoorzieneLeveringOp = pakje.VoorzieneLeveringOp;
+
+            if (typeof(T) == typeof(PakjeGeleverdMessage)) result.MessageType = PakjeMessageType.Geleverd;
+            else if (typeof(T) == typeof(PakjeLeveringGewijzigdMessage)) result.MessageType = PakjeMessageType.LeveringGewijzigd;
+            else if (typeof(T) == typeof(PakjeStatusGewijzigdMessage)) result.MessageType = PakjeMessageType.StatusGewijzigd;
+            else result.MessageType = PakjeMessageType.Aangemaakt;
 
             return result;
         }

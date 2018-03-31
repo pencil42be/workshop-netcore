@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Pencil42.PakjesDienst.Db.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,12 +16,12 @@ namespace Pencil42.PakjesDienst.Db.Migrations
                     PakjeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Bestemmeling = table.Column<string>(nullable: true),
-                    GeleverdOp = table.Column<DateTime>(nullable: false),
+                    GeleverdOp = table.Column<DateTime>(nullable: true),
                     Inhoud = table.Column<string>(nullable: true),
                     KoerierDienst = table.Column<string>(nullable: true),
                     LeveringsStatus = table.Column<int>(nullable: false),
                     Verzender = table.Column<string>(nullable: true),
-                    VoorzieneLeveringOp = table.Column<DateTime>(nullable: false)
+                    VoorzieneLeveringOp = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
