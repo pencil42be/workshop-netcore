@@ -157,6 +157,8 @@ Hou er rekening mee dat dit verschilt tussen .net core 2.0 en 2.1 (geunificeerde
 - check http://127.0.0.1:8161/admin/ met admin/admin
 - wanneer connectie maken van binnenin docker container, gebruik uw IP address, niet localhost
 
+# Amqp clients
+Het voorbeeld is geschreven met [AmqpNetLite](http://azure.github.io/amqpnetlite/articles/building_application.html), maar het is mogelijk dat de [RabbitMQ client](http://rabbitmq.github.io/rabbitmq-dotnet-client/index.html) interessanter is. 
 
 # run SQL server 2017 in docker
 - zie https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker
@@ -185,6 +187,8 @@ Een ander domein kan ook gerust gebruikt worden.
 - voeg in de api razorpages toe voor de verzender en koerier of bouw een aparte app die de api aanspreekt
 - transformeer de appsettings.production.json in een build/release flow waarbij enkel de tool de juiste config kent
 - maak een uwp of xamarin app die libraries van deze app hergebruikt
+- een andere amqp client gebruiken (RabbitMQ)
+- pub/sub doen ipv queues, bijvoorbeeld met [RabbitMQ](http://www.rabbitmq.com/tutorials/tutorial-three-dotnet.html)
 
 
 ## NSwag
