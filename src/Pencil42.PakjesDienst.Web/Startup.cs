@@ -29,12 +29,10 @@ namespace Pencil42.PakjesDienst.Web
             services.AddMvc();
             services.AddSignalR();
 
-            services.Configure<PakjesDbSettings>(Configuration.GetSection(PakjesDbSettings.SectionName));
             services.Configure<PakjesQueueSettings>(Configuration.GetSection(PakjesQueueSettings.SectionName));
             services.AddSingleton<IHostedService, QueueListener>();
 
-            var pakjesSettings = Configuration.GetSection(PakjesDbSettings.SectionName).Get<PakjesDbSettings>();
-            var connection = Configuration.GetConnectionString(pakjesSettings.ConnectionStringName);
+            var connection = Configuration.GetConnectionString(Constants.ConnectionStrings.Pakjes);
             services.AddDbContext<PakjesContext>(options => options.UseSqlServer(connection));
         }
 

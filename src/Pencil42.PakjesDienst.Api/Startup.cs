@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +23,7 @@ namespace Pencil42.PakjesDienst.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            var b = new ConfigurationBuilder();
         }
 
         public IConfiguration Configuration { get; }
@@ -30,12 +32,10 @@ namespace Pencil42.PakjesDienst.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.Configure<PakjesDbSettings>(Configuration.GetSection(PakjesDbSettings.SectionName));
             services.Configure<PakjesQueueSettings>(Configuration.GetSection(PakjesQueueSettings.SectionName));
             services.AddSingleton(typeof(QueueSender));
 
-            var pakjesSettings = Configuration.GetSection(PakjesDbSettings.SectionName).Get<PakjesDbSettings>();
-            var connection =  Configuration.GetConnectionString(pakjesSettings.ConnectionStringName);
+            var connection =  Configuration.GetConnectionString(Constants.ConnectionStrings.Pakjes);
             services.AddDbContext<PakjesContext>(options => options.UseSqlServer(connection));
         }
 

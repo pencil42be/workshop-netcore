@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Pencil42.PakjesDienst.Db
 {
@@ -15,11 +17,8 @@ namespace Pencil42.PakjesDienst.Db
         {
 
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //optionsBuilder.UseSqlServer();
-        }
     }
+
+    
 
 }
