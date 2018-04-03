@@ -173,6 +173,19 @@ De applicatie bestaat uit een database, een queue of eventhub, een web api en ee
 
 Een ander domein kan ook gerust gebruikt worden.
 
+## Oefeningen
+(niet in volgorde, niet exhaustief, pick & mix & voeg zelf toe)
+- bouw de apps op vanaf 0, op basis van bovenstaande uitleg
+- voeg automapper toe
+- voeg een javascript front-end toe die de rest api aanspreekt en de signalr berichten ontvangt en toont
+- stuur de signalr berichten enkel naar specifieke gebruikers
+- deploy activemq in een container
+- zet de 'environment' voor asp.net core in de container of container orchestrator/host
+- voeg authenticatie toe, e.g. op basis van identityserver4
+- voeg in de api razorpages toe voor de verzender en koerier of bouw een aparte app die de api aanspreekt
+- transformeer de appsettings.production.json in een build/release flow waarbij enkel de tool de juiste config kent
+- maak een uwp of xamarin app die libraries van deze app hergebruikt
+
 
 ## NSwag
 Swagger-ui voor je API
