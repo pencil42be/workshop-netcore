@@ -1,7 +1,42 @@
+Glossary - https://docs.microsoft.com/en-us/dotnet/standard/glossary
+
+#### .net standard
+- Vervangt PCL
+- Versies - https://docs.microsoft.com/nl-nl/dotnet/standard/net-standard
+  ![VersionTable](/assets/net-standard-version-table-04-2018.png)
+- **Metafoor** - .net standard als interface met implementaties
+  - https://github.com/dotnet/standard/blob/master/docs/metaphor.md
+- Lagenmodel - .net standard in relatie tot runtimes
+  - Voor .net standard
+![Before](/assets/net-layers-before.png =250x250)
+  - Na .net standard
+![After](/assets/net-layers-after.png)
+- Wanneer een .net standard lib maken?
+  - hergebruik op >1 platform (.net core, .net fw, xamarin, UWP)
+  - ok als minder API's beschikbaar
+- Wanneer een .net core lib maken?
+  - als alleen gebruikt op .net core
+  - meer API's nodig
+- Wat kunnen we referencen vanuit netstandard lib?
+   ![References](/assets/net-standard-references.png)
+  - netstandard (of PCL)
+  - net framework via compat shim
+    - zie ook https://github.com/dotnet/standard/tree/master/docs/netstandard-20#assembly-unification
+    - type forwarding door msbuild toegevoegd waar nodig
+  - Type Forwarding
+  ![References](/assets/net-standard-type-forwarding.png)
+  - Compatibility Shim
+  ![References](/assets/net-standard-compat-shim.png)
+
 #### .net core
-- Entrypoint
+.net core is dus 1 van de 'implementaties' van .net standard
+- runtime met superset van netstandard API (zie versie tabel)
+- cross-platform
+- CLI tools + VS tools (Full VS, VSCode, VS for Mac)
+
+Documentatie-urls
+- Entrypoint docs
   - https://docs.microsoft.com/en-us/dotnet/core/
-- Getting started
 - .net Core CLI
   - https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-with-xplat-cli
 - .net Core in Visual Studio
@@ -11,15 +46,13 @@
   - https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos
   - https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-mac-vs-full-solution
 
-
-#### .net standard
-- **Metafoor** - .net standard als interface met implementaties
-- Lagenmodel - .net standard in relatie tot 
-
-
+Zie ook deze lijst van .net core libraries, tools etc...
 https://github.com/thangchung/awesome-dotnet-core
 
+
 #### asp.net core
+Vroeger gekend als ASP.NET 5 en de start van .NET core.
+
 - in VS2017
 - in VSCode
 - in VS for Mac
