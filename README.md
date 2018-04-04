@@ -94,7 +94,7 @@ in VS for Mac
 
 ### asp.net core of classic asp.net? Wat te kiezen?
 
-- voor containers is core de voor de hand liggende keuze
+- voor containers met microservices is core de voor de hand liggende keuze
 - zie https://docs.microsoft.com/en-us/aspnet/core/choose-aspnet-framework
 
 
@@ -157,6 +157,15 @@ Hou er rekening mee dat dit verschilt tussen .net core 2.0 en 2.1 (geunificeerde
 - check http://127.0.0.1:8161/admin/ met admin/admin
 - wanneer connectie maken van binnenin docker container, gebruik uw IP address, niet localhost
 
+# Setup RabbitMQ in docker
+https://gist.github.com/yetanotherchris/c954d1e8b688845c2dcdb3b33c94b2d2
+```
+docker run -d --hostname my-rabbit --name some-rabbit -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 15672:15672 rabbitmq
+docker exec some-rabbit rabbitmq-plugins enable rabbitmq_management
+```
+
+(met dank aan lv)
+
 # Amqp clients
 Het voorbeeld is geschreven met [AmqpNetLite](http://azure.github.io/amqpnetlite/articles/building_application.html), maar het is mogelijk dat de [RabbitMQ client](http://rabbitmq.github.io/rabbitmq-dotnet-client/index.html) interessanter is. 
 
@@ -181,15 +190,20 @@ Een ander domein kan ook gerust gebruikt worden.
 - voeg automapper toe
 - voeg een javascript front-end toe die de rest api aanspreekt en de signalr berichten ontvangt en toont
 - stuur de signalr berichten enkel naar specifieke gebruikers
-- deploy activemq in een container
+  - gebruik de signalr ConnectionId en de naam van de Bestemmeling
+- deploy een amqp compatibele server in een container (activemq of rabbitmq)
 - zet de 'environment' voor asp.net core in de container of container orchestrator/host
 - voeg authenticatie toe, e.g. op basis van identityserver4
 - voeg in de api razorpages toe voor de verzender en koerier of bouw een aparte app die de api aanspreekt
 - transformeer de appsettings.production.json in een build/release flow waarbij enkel de tool de juiste config kent
 - maak een uwp of xamarin app die libraries van deze app hergebruikt
-- een andere amqp client gebruiken (RabbitMQ)
+- een andere amqp client gebruiken bijvoorbeeld RabbitMQ)
 - pub/sub doen ipv queues, bijvoorbeeld met [RabbitMQ](http://www.rabbitmq.com/tutorials/tutorial-three-dotnet.html)
-
+- 1 of meer relaties toevoegen aan het model
+  - een tabel voor de Bestemmeling om eerdere pakjes op te vragen
+  - een tabel voor een Levering om meerdere pakjes te bundelen
+  - een tabel om uit een lijst van Koeriers te kiezen
+  - ...
 
 ## NSwag
 Swagger-ui voor je API
@@ -215,3 +229,8 @@ Real-time communicatie naar clients
 - sample app -  https://github.com/aspnet/signalr-samples/blob/master/ChatSample/ChatSample/ChatHub.cs
 - stuur vanaf controller naar signalR - [SO Question](https://stackoverflow.com/questions/46904678/call-signalr-core-hub-method-from-controller)
 - stuur naar specifieke client via ConnectionId zie ook [artikel](https://damienbod.com/2017/12/05/sending-direct-messages-using-signalr-with-asp-net-core-and-angular/)
+
+# Lectuur
+[e-Shop on containers](https://github.com/dotnet-architecture/eShopOnContainers) is een demo applicatie van Microsoft specifiek gericht op microservices.
+
+[Microservices book](https://docs.microsoft.com/nl-nl/dotnet/standard/microservices-architecture/) beschrijft een aantal technieken voor microservices op het .net core platform en maakt gebruik van eShopOnContainers als voorbeeld.
