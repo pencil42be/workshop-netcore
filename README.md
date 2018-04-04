@@ -164,7 +164,7 @@ docker run -d --hostname my-rabbit --name some-rabbit -p 4369:4369 -p 5671:5671 
 docker exec some-rabbit rabbitmq-plugins enable rabbitmq_management
 ```
 
-(met dank aan lv)
+(met dank aan lv :)
 
 # Amqp clients
 Het voorbeeld is geschreven met [AmqpNetLite](http://azure.github.io/amqpnetlite/articles/building_application.html), maar het is mogelijk dat de [RabbitMQ client](http://rabbitmq.github.io/rabbitmq-dotnet-client/index.html) interessanter is. 
@@ -176,17 +176,18 @@ Het voorbeeld is geschreven met [AmqpNetLite](http://azure.github.io/amqpnetlite
   - dit geval is nu op poort 1401, dus voeg `,1401` aan je servernaam toe in connectionstring
 
 # PakjesDienst Project
-Als voorbeeld gebruiken we een fictieve pakjesdienst. Een winkel kan een pakje registreren, te verzenden via een koerierdienst en te leveren aan een bestemmeling. De koerierdienst kan de status en voorziene levertijd van het pakje aanpassen. De bestemmeling kan berichten ontvangen wanneer de status of levertijd van het pakje aangepast wordt.
+Als voorbeeld gebruiken we een fictieve pakjesdienst. Een verzender kan een pakje registreren, te verzenden via een koerierdienst en te leveren aan een bestemmeling. De koerierdienst kan de status en voorziene levertijd van het pakje aanpassen. De bestemmeling kan berichten ontvangen wanneer de status of levertijd van het pakje aangepast wordt.
 
 ![References](/assets/pakjesdienst-overzicht.png)
 
 De applicatie bestaat uit een database, een queue of eventhub, een web api en een web applicatie. Alles kan in containers ge-deployed worden.
 
-Een ander domein kan ook gerust gebruikt worden.
+Een ander domein kan ook gerust gebruikt worden. Maak het niet te complex om mee te beginnen en voeg dan naar eigen smaak technische of functionele complexiteit toe.
 
 ## Oefeningen
-(niet in volgorde, niet exhaustief, pick & mix & voeg zelf toe)
+(niet in volgorde, niet exhaustief, pick & mix & voeg zelf toe wat je wil)
 - bouw de apps op vanaf 0, op basis van bovenstaande uitleg
+- of gebruik het voorbeeld en breid het uit
 - voeg automapper toe
 - voeg een javascript front-end toe die de rest api aanspreekt en de signalr berichten ontvangt en toont
 - stuur de signalr berichten enkel naar specifieke gebruikers
@@ -200,24 +201,26 @@ Een ander domein kan ook gerust gebruikt worden.
 - een andere amqp client gebruiken bijvoorbeeld RabbitMQ)
 - pub/sub doen ipv queues, bijvoorbeeld met [RabbitMQ](http://www.rabbitmq.com/tutorials/tutorial-three-dotnet.html)
 - 1 of meer relaties toevoegen aan het model
-  - een tabel voor de Bestemmeling om eerdere pakjes op te vragen
-  - een tabel voor een Levering om meerdere pakjes te bundelen
-  - een tabel om uit een lijst van Koeriers te kiezen
+  - laat een Verzender pakjes volgen
+  - laat een Bestemmeling eerdere pakjes opvragen
+  - laat een Verzender of een Koerier meerdere pakjes bundelen in een Levering
+  - laat een Verzender kiezen uit een lijst van Koeriers
   - ...
 
 ## NSwag
 Swagger-ui voor je API
-Makkelijk te gebruiken als middleware, configureerbaar
-Kan user authenticatie faciliteren in UI
-Kan ook enkel docs genereren ipv ook de API aan te roepen (ReDoc)
-Kan dienen als developer portal / SDK
+- Makkelijk te gebruiken als developer interface, configureerbaar
+- Injecteerbaar als middleware
+- Kan user authenticatie faciliteren in UI
+- Kan ook enkel docs genereren ipv ook de API aan te roepen (ReDoc)
+- Kan dienen als developer portal / SDK
 
 Home: https://github.com/RSuter/NSwag
 Gebruiken in asp.net core: https://github.com/RSuter/NSwag/wiki/Middlewares
 
   
 
-## (Optioneel) AutoMapper
+## AutoMapper
 Veelgebruikte lib voor Dto's die extern 'contract' mappen op interne types
 - http://aspnetcorepath.com/automapper-in-asp-net-core-2/
 
@@ -230,7 +233,7 @@ Real-time communicatie naar clients
 - stuur vanaf controller naar signalR - [SO Question](https://stackoverflow.com/questions/46904678/call-signalr-core-hub-method-from-controller)
 - stuur naar specifieke client via ConnectionId zie ook [artikel](https://damienbod.com/2017/12/05/sending-direct-messages-using-signalr-with-asp-net-core-and-angular/)
 
-# Lectuur
+# Lectuur achteraf
 [e-Shop on containers](https://github.com/dotnet-architecture/eShopOnContainers) is een demo applicatie van Microsoft specifiek gericht op microservices.
 
 [Microservices book](https://docs.microsoft.com/nl-nl/dotnet/standard/microservices-architecture/) beschrijft een aantal technieken voor microservices op het .net core platform en maakt gebruik van eShopOnContainers als voorbeeld.
