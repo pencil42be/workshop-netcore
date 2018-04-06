@@ -237,3 +237,8 @@ Real-time communicatie naar clients
 [e-Shop on containers](https://github.com/dotnet-architecture/eShopOnContainers) is een demo applicatie van Microsoft specifiek gericht op microservices.
 
 [Microservices book](https://docs.microsoft.com/nl-nl/dotnet/standard/microservices-architecture/) beschrijft een aantal technieken voor microservices op het .net core platform en maakt gebruik van eShopOnContainers als voorbeeld.
+
+
+# Deploy naar Openshift Platform
+
+oc new-app registry.access.redhat.com/dotnet/dotnet-20-rhel7~https://github.com/pencil42be/workshop-netcore --context-dir=src --name=pakjes-dienst-api-YOURNAMEHERE --build-env=DOTNET_STARTUP_PROJECT=Pencil42.PakjesDienst.Api/Pencil42.PakjesDienst.Api.csproj
